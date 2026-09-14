@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#312e81">
+    <title>HABASSI | لوحة العميل</title>
+</head>
+<body>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 45%, #e0f2fe 100%);
+    color: #222;
+}
+
+/* صفحة الدخول */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    border: 1px solid rgba(79, 70, 229, .12);
+    border-radius: 20px;
+    box-shadow: 0 18px 45px rgba(30, 41, 59, .14);
+    text-align: center;
+}
+
+.login-box h1 {
+    margin-bottom: 10px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #312e81;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    color: white;
+    box-shadow: 0 8px 18px rgba(79, 70, 229, .3);
+}
+
+.login-box p {
+    color: #777;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: 2px solid transparent;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    background: white;
+}
+
+input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, .12);
+}
+
+select:focus,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(6, 182, 212, .35);
+    outline-offset: 2px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 13px 18px;
+    font-size: 15px;
+    transition: transform .2s, box-shadow .2s, background .2s, opacity .2s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(15, 23, 42, .12);
+}
+
+.login-btn {
+    width: 100%;
+    background: #4f46e5;
+    color: white;
+}
+
+.login-btn:hover {
+    opacity: .9;
+}
+
+.error {
+    color: #d00;
+    margin-top: 15px;
+    display: none;
+}
+
+.site-notification {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 100;
+    max-width: 340px;
+    padding: 15px 18px;
+    border-radius: 12px;
+    background: #172554;
+    color: white;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .25);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(15px);
+    transition: opacity .25s, transform .25s;
+}
+
+.site-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* التطبيق */
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(120deg, #171923, #312e81);
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+header h2 {
+    font-size: 21px;
+}
+
+header .brand {
+    color: white;
+    margin-bottom: 0;
+}
+
+header .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #4f46e5;
+    box-shadow: none;
+}
+
+.logout {
+    background: #e53e3e;
+    color: white;
+}
+
+/* القائمة */
+nav {
+    background: white;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-btn {
+    background: #edf0f5;
+    color: #222;
+}
+
+.nav-btn.active {
+    background: #4f46e5;
+    color: white;
+}
+
+.nav-btn:hover {
+    background: #dfe3ff;
+}
+
+.nav-btn.active:hover {
+    background: #4338ca;
+    color: white;
+}
+
+/* المحتوى */
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+.welcome {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.welcome h1 {
+    margin-bottom: 8px;
+}
+
+.role {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #eee;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.stat-box {
+    padding: 16px;
+    border-radius: 12px;
+    background: #f6f7fa;
+    text-align: center;
+}
+
+.stat-box strong {
+    display: block;
+    color: #312e81;
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* الصفحات */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+        animation: page-in .3s ease both;
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 16px;
+        border-right: 5px solid #4f46e5;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.05);
+        border: 1px solid rgba(148, 163, 184, .16);
+}
+
+.card h2 {
+    margin-bottom: 12px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px;
+    background: #f6f7fa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.delete-btn {
+    background: #e53e3e;
+    color: white;
+    padding: 8px 12px;
+}
+
+.edit-btn {
+    background: #4f46e5;
+    color: white;
+    padding: 8px 12px;
+}
+
+.admin-panel {
+    border: 2px dashed #4f46e5;
+    background: #f4f3ff;
+}
+
+.admin-panel textarea {
+    width: 100%;
+    min-height: 130px;
+    resize: vertical;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.save-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.server-result {
+    padding: 15px;
+    background: #f6f7fa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.server-result img {
+    width: 100%;
+    max-width: 260px;
+    max-height: 160px;
+    object-fit: cover;
+    display: block;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+.server-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+        overflow: hidden;
+}
+
+.server-table th,
+.server-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.server-table th {
+    background: #eef2ff;
+    color: #312e81;
+}
+
+.server-table .stars {
+    color: #eab308;
+    white-space: nowrap;
+    font-size: 18px;
+}
+
+.server-table .delete-btn {
+    padding: 7px 10px;
+}
+
+.server-table .edit-btn {
+    padding: 7px 10px;
+    margin-left: 5px;
+}
+
+.graph-item {
+    padding: 15px;
+    margin-top: 12px;
+    background: #f6f7fa;
+    border-radius: 10px;
+}
+
+.graph-item img {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    max-height: 360px;
+    object-fit: contain;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.graph-item a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #4338ca;
+    font-weight: bold;
+}
+
+.danger-btn {
+    background: #b91c1c;
+    color: white;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .server-table {
+        font-size: 13px;
+    }
+
+    .server-table th,
+    .server-table td {
+        padding: 8px 5px;
+    }
+}
+
+.green {
+    color: #16803c;
+}
+
+.red {
+    color: #c53030;
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    main {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     صفحة الدخول
+========================= -->
+<section class="login-page" id="loginPage">
+
+    <div class="login-box">
+
+        <div class="brand" aria-label="HABASSI">
+            <span class="brand-mark">H</span>
+            <span>HABASSI</span>
+        </div>
+
+        <h1>مرحبًا بك 👋</h1>
+
+        <p>أدخل اسمك والرمز للدخول</p>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="اكتب اسمك"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="اكتب الرمز"
+        >
+
+        <button class="login-btn" onclick="login()">
+            دخول
+        </button>
+
+        <div class="error" id="error">
+            الاسم أو الرمز غير صحيح
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     الموقع بعد الدخول
+========================= -->
+<section class="app" id="app">
+
+<header>
+
+    <div class="brand" aria-label="HABASSI">
+        <span class="brand-mark">H</span>
+        <span>HABASSI</span>
+    </div>
+
+    <h2>لوحة التحكم</h2>
+
+    <button class="logout" onclick="logout()">
+        خروج
+    </button>
+
+</header>
+
+
+<!-- القائمة -->
+
+<nav>
+
+    <button class="nav-btn active"
+            onclick="showPage('home', this)">
+        الرئيسية
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('tasks', this)">
+        المهام
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('info', this)">
+        المعلومات والأسرار
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('graph', this)">
+        الغرافي
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('servers', this)">
+        نتائج الخوادم
+    </button>
+
+</nav>
+
+
+<main>
+
+<!-- الرئيسية -->
+
+<div class="page active" id="home">
+
+    <div class="welcome">
+
+        <h1 id="welcomeMessage">
+            مرحبًا بك
+        </h1>
+
+        <p>
+            هذه هي الصفحة الرئيسية الخاصة بك.
+        </p>
+
+        <span class="role" id="userRole">
+            مستخدم
+        </span>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>أهلاً بك في الموقع</h2>
+
+        <p>
+            يمكنك الانتقال بين الأقسام من القائمة الموجودة بالأعلى.
+        </p>
+
+        <div class="stats-grid" aria-label="إحصائيات الموقع">
+            <div class="stat-box">
+                <strong id="taskCount">0</strong>
+                <span>المهام</span>
+            </div>
+            <div class="stat-box">
+                <strong id="serverCount">0</strong>
+                <span>النتائج</span>
+            </div>
+            <div class="stat-box">
+                <strong id="graphCount">0</strong>
+                <span>الملفات والصور</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- المهام -->
+
+<div class="page" id="tasks">
+
+    <div class="card">
+
+        <h2>📋 المهام</h2>
+
+        <div id="tasksList">
+
+            <div class="task">
+                <span>إكمال المهمة الأولى</span>
+            </div>
+
+            <div class="task">
+                <span>مراجعة البيانات</span>
+            </div>
+
+            <div class="task">
+                <span>متابعة النتائج</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- يظهر للـ Admin فقط -->
+
+    <div class="card admin-panel" id="taskAdmin" style="display:none">
+
+        <h2>🛠️ إدارة المهام - Admin</h2>
+
+        <input
+            id="newTask"
+            placeholder="اكتب مهمة جديدة"
+        >
+
+        <button class="save-btn" onclick="addTask()">
+            إضافة المهمة
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- المعلومات -->
+
+<div class="page" id="info">
+
+    <div class="card">
+
+        <h2>🔐 المعلومات والأسرار</h2>
+
+        <p id="infoText">
+            هذه المعلومات تظهر للمستخدمين المسموح لهم بالدخول.
+        </p>
+
+    </div>
+
+
+    <div class="card admin-panel" id="infoAdmin" style="display:none">
+
+        <h2>تعديل المعلومات - Admin</h2>
+
+        <textarea id="infoEditor"></textarea>
+
+        <button class="save-btn" onclick="saveInfo()">
+            حفظ التعديل
+        </button>
+
+    </div>
+
+    <div class="card admin-panel" id="passwordAdmin" style="display:none">
+
+        <h2>🔑 إدارة كلمات المرور - Admin</h2>
+
+        <input
+            type="password"
+            id="newPassword"
+            placeholder="اكتب كلمة مرورك الجديدة"
+        >
+
+        <button class="save-btn" onclick="changeOwnPassword()">
+            تغيير كلمة مروري
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- الغرافي -->
+
+<div class="page" id="graph">
+
+    <div class="card">
+
+        <h2>📊 الغرافي</h2>
+
+        <div id="graphItems">
+            <p id="emptyGraphMessage">لا توجد ملفات أو صور بعد.</p>
+        </div>
+
+    </div>
+
+    <div class="card admin-panel" id="graphAdmin" style="display:none">
+
+        <h2>🛠️ إدارة الغرافي - Admin</h2>
+
+        <input
+            type="file"
+            id="graphFile"
+            accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt"
+        >
+
+        <button class="save-btn" onclick="addGraphFile()">
+            إضافة ملف أو صورة
+        </button>
+
+        <button class="danger-btn" onclick="deleteAllGraphFiles()">
+            حذف كل الملفات والصور
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- نتائج الخوادم -->
+
+<div class="page" id="servers">
+
+    <div class="card">
+
+        <h2>🖥️ نتائج الخوادم</h2>
+
+        <input
+            type="search"
+            id="serverSearch"
+            placeholder="البحث بالاسم أو المعلومات"
+            oninput="filterServerResults()"
+        >
+
+        <table class="server-table">
+            <thead>
+                <tr>
+                    <th>التقييم</th>
+                    <th>الاسم واللقب</th>
+                    <th>المعلومات</th>
+                    <th>إجراء</th>
+                </tr>
+            </thead>
+            <tbody id="serverResults">
+                <tr>
+                    <td class="stars">★★★★★</td>
+                    <td>الاسم الأول واللقب</td>
+                    <td>لا توجد معلومات بعد</td>
+                    <td>
+                        <button class="edit-btn" onclick="editServerResult(this)">تعديل</button>
+                        <button class="delete-btn" onclick="deleteServerResult(this)">حذف</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="card admin-panel" id="serverAdmin" style="display:none">
+
+        <h2>🛠️ إدارة الجدول - Admin</h2>
+
+        <input
+            id="serverName"
+            placeholder="الاسم واللقب"
+        >
+
+        <input
+            id="serverInfo"
+            placeholder="المعلومات"
+        >
+
+        <select id="serverRating">
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="1">★☆☆☆☆</option>
+        </select>
+
+        <button class="save-btn" onclick="addServerResult()">
+            إضافة إلى الجدول
+        </button>
+
+    </div>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+/* =====================================
+   إعدادات الرموز
+===================================== */
+
+const STORAGE_KEYS = {
+    tasks: "habassiTasks",
+    info: "habassiInfo",
+    servers: "habassiServers",
+    loginAttempts: "habassiLoginAttempts",
+    loginLockUntil: "habassiLoginLockUntil"
+};
+
+const DEFAULT_CREDENTIALS = {
+    admin: "ADMIN2026",
+    user: "USER2026",
+    roi: "ROI2026"
+};
+
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_LOCK_MS = 30000;
+const SESSION_TIMEOUT_MS = 15 * 60 * 1000;
+let sessionTimeout;
+
+function getCredentials() {
+    try {
+        return {
+            ...DEFAULT_CREDENTIALS,
+            ...JSON.parse(localStorage.getItem("portalCredentials") || "{}")
+        };
+    } catch {
+        return { ...DEFAULT_CREDENTIALS };
+    }
+}
+
+function saveCredentials(credentials) {
+    localStorage.setItem("portalCredentials", JSON.stringify(credentials));
+}
+
+function loadSavedContent() {
+    const savedInfo = localStorage.getItem(STORAGE_KEYS.info);
+    if (savedInfo !== null) {
+        document.getElementById("infoText").textContent = savedInfo;
+    }
+
+    const savedTasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.tasks) || "null");
+    if (Array.isArray(savedTasks)) {
+        document.getElementById("tasksList").innerHTML = "";
+        savedTasks.forEach(text => appendTask(text, false));
+    }
+
+    const savedServers = JSON.parse(localStorage.getItem(STORAGE_KEYS.servers) || "null");
+    if (Array.isArray(savedServers)) {
+        document.getElementById("serverResults").innerHTML = "";
+        savedServers.forEach(server => appendServerResult(server, false));
+    }
+        updateDashboardStats();
+}
+
+    function updateDashboardStats() {
+        document.getElementById("taskCount").textContent =
+            document.querySelectorAll("#tasksList .task").length;
+        document.getElementById("serverCount").textContent =
+            document.querySelectorAll("#serverResults tr").length;
+        document.getElementById("graphCount").textContent =
+            document.querySelectorAll("#graphItems .graph-item").length;
+    }
+function saveTasks() {
+    const tasks = [...document.querySelectorAll("#tasksList .task span")]
+        .map(task => task.textContent);
+    localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify(tasks));
+}
+
+function saveServers() {
+    const servers = [...document.querySelectorAll("#serverResults tr")]
+        .map(row => ({
+            rating: row.querySelector(".stars").textContent,
+            name: row.cells[1].textContent,
+            info: row.cells[2].textContent
+        }));
+    localStorage.setItem(STORAGE_KEYS.servers, JSON.stringify(servers));
+}
+
+
+/* المستخدم الحالي */
+
+let currentUser = "";
+let currentRole = "";
+
+function hasAdminAccess() {
+    return currentRole === "admin" || currentRole === "roi";
+}
+
+function getLoginLockRemaining() {
+    const lockUntil = Number(localStorage.getItem(STORAGE_KEYS.loginLockUntil) || 0);
+    return Math.max(0, lockUntil - Date.now());
+}
+
+function registerFailedLogin() {
+    const attempts = Number(localStorage.getItem(STORAGE_KEYS.loginAttempts) || 0) + 1;
+
+    if (attempts >= MAX_LOGIN_ATTEMPTS) {
+        localStorage.setItem(STORAGE_KEYS.loginAttempts, "0");
+        localStorage.setItem(STORAGE_KEYS.loginLockUntil, String(Date.now() + LOGIN_LOCK_MS));
+        return LOGIN_LOCK_MS;
+    }
+
+    localStorage.setItem(STORAGE_KEYS.loginAttempts, String(attempts));
+    return 0;
+}
+
+function clearFailedLogins() {
+    localStorage.removeItem(STORAGE_KEYS.loginAttempts);
+    localStorage.removeItem(STORAGE_KEYS.loginLockUntil);
+}
+
+function refreshSessionTimeout() {
+    if (!currentUser) {
+        return;
+    }
+
+    window.clearTimeout(sessionTimeout);
+    sessionTimeout = window.setTimeout(() => {
+        if (currentUser) {
+            logout();
+            alert("تم تسجيل الخروج تلقائيًا بسبب عدم النشاط");
+        }
+    }, SESSION_TIMEOUT_MS);
+}
+
+["click", "keydown", "mousemove", "touchstart"].forEach(eventName => {
+    document.addEventListener(eventName, refreshSessionTimeout, { passive: true });
+});
+
+
+/* =====================================
+   تسجيل الدخول
+===================================== */
+
+function login() {
+
+    const name =
+        document.getElementById("username").value.trim();
+
+    const code =
+        document.getElementById("password").value.trim();
+
+    const error =
+        document.getElementById("error");
+
+    if (!name || !code) {
+
+        error.textContent =
+            "من فضلك اكتب الاسم والرمز";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    const credentials = getCredentials();
+
+    if (code === credentials.admin) {
+        currentRole = "admin";
+        currentUser = name;
+    } else if (code === credentials.roi) {
+        currentRole = "roi";
+        currentUser = name;
+    } else if (code === credentials.user) {
+        currentRole = "user";
+        currentUser = name;
+    } else {
+        const newLock = registerFailedLogin();
+        error.textContent = newLock > 0
+            ? "محاولات كثيرة. تم إيقاف الدخول مؤقتًا"
+            : "الرمز غير صحيح";
+        error.style.display = "block";
+        return;
+    }
+
+    clearFailedLogins();
+    refreshSessionTimeout();
+
+
+    error.style.display = "none";
+
+
+    /* إخفاء الدخول */
+
+    document.getElementById("loginPage")
+        .style.display = "none";
+
+
+    /* إظهار الموقع */
+
+    document.getElementById("app")
+        .style.display = "block";
+
+    notifyLogin(currentUser, currentRole);
+
+
+    /* رسالة الترحيب */
+
+    document.getElementById("welcomeMessage")
+        .textContent =
+        "مرحبًا بك أيها العميل " + currentUser + " 👋";
+
+
+    /* تحديد الصلاحيات */
+
+    if (hasAdminAccess()) {
+
+        document.getElementById("userRole")
+            .textContent = currentRole === "roi" ? "👑 ROI" : "👑 Admin";
+
+        document.getElementById("taskAdmin")
+            .style.display = "block";
+
+        document.getElementById("infoAdmin")
+            .style.display = "block";
+
+        document.getElementById("passwordAdmin")
+            .style.display = "block";
+
+        document.getElementById("serverAdmin")
+            .style.display = "block";
+
+        document.getElementById("graphAdmin")
+            .style.display = "block";
+
+    }
+
+    else {
+
+        document.getElementById("userRole")
+            .textContent = "👤 عميل";
+
+        document.getElementById("taskAdmin")
+            .style.display = "none";
+
+        document.getElementById("infoAdmin")
+            .style.display = "none";
+
+        document.getElementById("passwordAdmin")
+            .style.display = "none";
+
+        document.getElementById("serverAdmin")
+            .style.display = "none";
+
+        document.getElementById("graphAdmin")
+            .style.display = "none";
+
+    }
+
+
+    /* تحميل المعلومات */
+
+    loadSavedContent();
+
+    document.getElementById("infoEditor").value =
+        document.getElementById("infoText").textContent;
+
+    updateGraphControls();
+    updateServerControls();
+}
+
+function notifyLogin(name, role) {
+    const roleName = role === "admin" ? "Admin" : role === "roi" ? "ROI" : "Client";
+    const message = "Connexion détectée : " + name + " (" + roleName + ")";
+    const banner = document.getElementById("siteNotification");
+
+    banner.textContent = message;
+    banner.classList.add("show");
+    window.clearTimeout(window.loginNotificationTimer);
+    window.loginNotificationTimer = window.setTimeout(() => {
+        banner.classList.remove("show");
+    }, 5000);
+
+    playLoginSound();
+
+    if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("HABASSI", { body: message });
+    } else if ("Notification" in window && Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                new Notification("HABASSI", { body: message });
+            }
+        });
+    }
+}
+
+function playLoginSound() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+        return;
+    }
+
+    const audioContext = new AudioContextClass();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 660;
+    gain.gain.setValueAtTime(.001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.18, audioContext.currentTime + .02);
+    gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + .35);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + .35);
+}
+
+
+/* =====================================
+   تغيير كلمات المرور - Admin فقط
+===================================== */
+
+function changeOwnPassword() {
+
+    if (currentRole !== "admin" && currentRole !== "roi") {
+        alert("ليس لديك صلاحية التعديل");
+        return;
+    }
+
+    const newPassword = document.getElementById("newPassword").value.trim();
+
+    if (newPassword.length < 4) {
+        alert("كلمة المرور يجب أن تحتوي على 4 أحرف على الأقل");
+        return;
+    }
+
+    const credentials = getCredentials();
+    credentials[currentRole] = newPassword;
+    saveCredentials(credentials);
+
+    document.getElementById("newPassword").value = "";
+    alert("تم تغيير كلمة المرور بنجاح ✓");
+}
+
+
+/* =====================================
+   إدارة نتائج الخوادم - Admin فقط
+===================================== */
+
+function addServerResult() {
+
+    if (!hasAdminAccess()) {
+        alert("ليس لديك صلاحية التعديل");
+        return;
+    }
+
+    const nameInput = document.getElementById("serverName");
+    const infoInput = document.getElementById("serverInfo");
+    const ratingInput = document.getElementById("serverRating");
+    const serverName = nameInput.value.trim();
+    const serverInfo = infoInput.value.trim();
+
+    if (!serverName) {
+        alert("اكتب الاسم واللقب أولاً");
+        return;
+    }
+
+    if (!serverInfo) {
+        alert("اكتب المعلومات أولاً");
+        return;
+    }
+
+    appendServerResult({
+        rating: "★".repeat(Number(ratingInput.value)) + "☆".repeat(5 - Number(ratingInput.value)),
+        name: serverName,
+        info: serverInfo
+    }, true);
+
+    nameInput.value = "";
+    infoInput.value = "";
+}
+
+function appendServerResult(server, persist) {
+    const result = document.createElement("tr");
+    const rating = document.createElement("td");
+    const name = document.createElement("td");
+    const info = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    const editButton = document.createElement("button");
+
+    rating.className = "stars";
+    rating.textContent = server.rating;
+    name.textContent = server.name;
+    info.textContent = server.info;
+    deleteButton.className = "delete-btn";
+    deleteButton.textContent = "حذف";
+    deleteButton.style.display = hasAdminAccess() ? "inline-block" : "none";
+    deleteButton.onclick = () => deleteServerResult(deleteButton);
+    editButton.className = "edit-btn";
+    editButton.textContent = "تعديل";
+    editButton.style.display = hasAdminAccess() ? "inline-block" : "none";
+    editButton.onclick = () => editServerResult(editButton);
+
+    const actions = document.createElement("td");
+    actions.append(editButton, deleteButton);
+    result.append(rating, name, info, actions);
+    document.getElementById("serverResults").appendChild(result);
+    updateDashboardStats();
+
+    if (persist) {
+        saveServers();
+    }
+}
+
+function deleteServerResult(button) {
+
+    if (!hasAdminAccess()) {
+        alert("الحذف متاح للـ Admin فقط");
+        return;
+    }
+
+    button.closest("tr").remove();
+    saveServers();
+    updateDashboardStats();
+}
+
+function editServerResult(button) {
+
+    if (!hasAdminAccess()) {
+        alert("التعديل متاح للـ Admin و ROI فقط");
+        return;
+    }
+
+    const row = button.closest("tr");
+    const name = prompt("الاسم واللقب:", row.cells[1].textContent);
+    const info = name === null ? null : prompt("المعلومات:", row.cells[2].textContent);
+    const rating = info === null ? null : prompt("عدد النجوم من 1 إلى 5:", row.cells[0].textContent.match(/★/g)?.length || 5);
+    const ratingNumber = Number(rating);
+
+    if (!name?.trim() || !info?.trim() || !Number.isInteger(ratingNumber) || ratingNumber < 1 || ratingNumber > 5) {
+        alert("اكتب اسمًا ومعلومات ورقم نجوم صحيحًا من 1 إلى 5");
+        return;
+    }
+
+    row.cells[0].textContent = "★".repeat(ratingNumber) + "☆".repeat(5 - ratingNumber);
+    row.cells[1].textContent = name.trim();
+    row.cells[2].textContent = info.trim();
+    saveServers();
+}
+
+function updateServerControls() {
+    document.querySelectorAll("#serverResults .edit-btn, #serverResults .delete-btn")
+        .forEach(button => {
+            button.style.display = hasAdminAccess() ? "inline-block" : "none";
+        });
+}
+
+function filterServerResults() {
+    const query = document.getElementById("serverSearch").value
+        .trim()
+        .toLowerCase();
+
+    document.querySelectorAll("#serverResults tr")
+        .forEach(row => {
+            const content = row.textContent.toLowerCase();
+            row.style.display = content.includes(query) ? "" : "none";
+        });
+}
+
+
+function addGraphFile() {
+
+    if (!hasAdminAccess()) {
+        alert("الإضافة متاحة للـ Admin فقط");
+        return;
+    }
+
+    const fileInput = document.getElementById("graphFile");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("اختر ملفًا أو صورة أولاً");
+        return;
+    }
+
+    const item = document.createElement("div");
+    const title = document.createElement("strong");
+    const deleteButton = document.createElement("button");
+    const fileUrl = URL.createObjectURL(file);
+
+    item.className = "graph-item";
+    title.textContent = file.name;
+    deleteButton.className = "delete-btn";
+    deleteButton.textContent = "حذف";
+    deleteButton.onclick = () => {
+        URL.revokeObjectURL(fileUrl);
+        item.remove();
+        updateGraphEmptyMessage();
+        updateDashboardStats();
+    };
+
+    item.appendChild(title);
+
+    if (file.type.startsWith("image/")) {
+        const image = document.createElement("img");
+        image.src = fileUrl;
+        image.alt = file.name;
+        item.appendChild(image);
+    } else {
+        const link = document.createElement("a");
+        link.href = fileUrl;
+        link.download = file.name;
+        link.textContent = "فتح أو تحميل الملف";
+        item.appendChild(link);
+    }
+
+    item.appendChild(document.createElement("br"));
+    item.appendChild(deleteButton);
+    document.getElementById("graphItems").appendChild(item);
+    document.getElementById("emptyGraphMessage").style.display = "none";
+    updateDashboardStats();
+    fileInput.value = "";
+}
+
+
+function deleteAllGraphFiles() {
+
+    if (!hasAdminAccess()) {
+        alert("الحذف متاح للـ Admin فقط");
+        return;
+    }
+
+    document.querySelectorAll("#graphItems .graph-item")
+        .forEach(item => item.remove());
+
+    updateGraphEmptyMessage();
+    updateDashboardStats();
+}
+
+
+function updateGraphEmptyMessage() {
+    const hasItems = document.querySelector("#graphItems .graph-item");
+    document.getElementById("emptyGraphMessage").style.display = hasItems ? "none" : "block";
+}
+
+function updateGraphControls() {
+    document.querySelectorAll("#graphItems .delete-btn")
+        .forEach(button => {
+            button.style.display = hasAdminAccess() ? "inline-block" : "none";
+        });
+}
+
+
+/* =====================================
+   التنقل بين الصفحات
+===================================== */
+
+function showPage(pageName, button) {
+
+    document.querySelectorAll(".page")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
+
+
+    document.getElementById(pageName)
+        .classList.add("active");
+
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+
+    button.classList.add("active");
+}
+
+
+/* =====================================
+   إضافة مهمة - Admin فقط
+===================================== */
+
+function addTask() {
+
+    if (!hasAdminAccess()) {
+
+        alert("ليس لديك صلاحية التعديل");
+
+        return;
+    }
+
+
+    const input =
+        document.getElementById("newTask");
+
+    const text =
+        input.value.trim();
+
+
+    if (!text) {
+
+        alert("اكتب المهمة أولاً");
+
+        return;
+    }
+
+
+    appendTask(text, true);
+
+
+    input.value = "";
+}
+
+function appendTask(text, persist) {
+    const task = document.createElement("div");
+    const label = document.createElement("span");
+    const deleteButton = document.createElement("button");
+
+    task.className = "task";
+    label.textContent = text;
+    deleteButton.className = "delete-btn";
+    deleteButton.textContent = "حذف";
+    deleteButton.onclick = () => {
+        task.remove();
+        saveTasks();
+    };
+
+    task.append(label, deleteButton);
+    document.getElementById("tasksList").appendChild(task);
+    updateDashboardStats();
+
+    if (persist) {
+        saveTasks();
+        updateDashboardStats();
+    }
+}
+
+
+/* =====================================
+   تعديل المعلومات
+===================================== */
+
+function saveInfo() {
+
+    if (!hasAdminAccess()) {
+
+        alert("ليس لديك صلاحية التعديل");
+
+        return;
+    }
+
+
+    const text =
+        document.getElementById("infoEditor").value;
+
+
+    document.getElementById("infoText")
+        .textContent = text;
+
+    localStorage.setItem(STORAGE_KEYS.info, text);
+
+
+    alert("تم حفظ المعلومات ✓");
+}
+
+
+/* =====================================
+   تسجيل الخروج
+===================================== */
+
+function logout() {
+
+    currentUser = "";
+    currentRole = "";
+
+
+    document.getElementById("app")
+        .style.display = "none";
+
+
+    document.getElementById("loginPage")
+        .style.display = "flex";
+
+
+    document.getElementById("username")
+        .value = "";
+
+    document.getElementById("password")
+        .value = "";
+
+    document.getElementById("error")
+        .style.display = "none";
+
+    document.querySelectorAll(".page")
+        .forEach(page => page.classList.remove("active"));
+
+    document.getElementById("home")
+        .classList.add("active");
+
+    updateGraphControls();
+    updateServerControls();
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(button => button.classList.remove("active"));
+
+    document.querySelector(".nav-btn")
+        .classList.add("active");
+
+}
+
+
+/* =====================================
+   حماية النص من HTML
+===================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+</script>
+
+</body>
+
+<div class="site-notification" id="siteNotification" role="status" aria-live="polite"></div>
+</html>
